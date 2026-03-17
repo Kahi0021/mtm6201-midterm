@@ -1,0 +1,749 @@
+
+/* :root is basically the whole page. I'm using it as a storage box
+   to save my colors and max width so I can reuse them anywhere
+   without having to remember the exact hex code every time.
+   If I want to change a color later I only edit it here, not everywhere */
+:root {
+  --white: #ffffff;       /* used for text and buttons on dark backgrounds */
+  --black: #000000;       /* main text color and dark backgrounds */
+  --gold: #d69e3d;        /* brand accent color used for labels and highlights */
+  --gold-dark: #966f2c;   /* darker gold used for button outlines on hover */
+  --bg: #f3f0e9;          /* the light cream background color for most sections */
+  --max-width: 1200px;    /* the widest the page content should ever get */
+}
+
+/* This removes the default spacing browsers add to elements.
+   I also set box-sizing to border-box so padding doesn't
+   make elements wider than I want them to be */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* This makes the page scroll smoothly when you click
+   on a link that jumps to a section instead of snapping there */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Karla', sans-serif;
+  font-size: 1rem;
+  background-color: var(--bg);
+  color: var(--black);
+  line-height: 1.6;
+}
+
+/* The skip link is hidden above the screen so normal users don't see it.
+   People who use a keyboard to navigate can press Tab and it shows up,
+   letting them skip the nav menu and go straight to the content.
+   This is important for accessibility */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  background: var(--gold);
+  color: var(--black);
+  padding: 0.5rem 1rem;
+  font-family: 'Karla', sans-serif;
+  font-weight: 700;
+  z-index: 9999;
+  text-decoration: none;
+}
+
+/* When someone tabs to it, it moves to the top of the screen */
+.skip-link:focus {
+  top: 0;
+}
+
+/* The wrapper keeps all my content centered on the page
+   and stops it from stretching too wide on big screens.
+   The max width is 1200px as required */
+.wrapper {
+  width: 90%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+
+/* ---- TEXT STYLES ---- */
+
+/* These are the font sizes for mobile.
+   I make them bigger later in the media queries
+   for tablet and desktop screens */
+
+h1 {
+  font-family: 'Lato', sans-serif;
+  font-size: 2.027rem;
+  font-weight: 900;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-family: 'Lato', sans-serif;
+  font-size: 1.802rem;
+  font-weight: 900;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-family: 'Lato', sans-serif;
+  font-size: 1.424rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+p {
+  font-size: 1rem;
+}
+
+/* This is the small gold text that shows above headings
+   like "WHAT WE OFFER". I made it a block element so it
+   sits on its own line above the heading */
+.label {
+  font-family: 'Karla', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+
+/* ---- BUTTONS ---- */
+
+/* These are the shared styles for all buttons.
+   The transition makes the color change happen slowly
+   instead of switching instantly when you hover */
+.btn {
+  display: inline-block;
+  font-family: 'Karla', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.85rem 2rem;
+  border: 2px solid;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* The light button is used on dark backgrounds like the hero section */
+.btn-light {
+  background-color: transparent;
+  border-color: var(--white);
+  color: var(--white);
+}
+
+/* When you hover or focus the light button it fills with white */
+.btn-light:hover,
+.btn-light:focus {
+  background-color: var(--white);
+  color: var(--black);
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* The dark button is used on the light cream sections */
+.btn-dark {
+  background-color: var(--black);
+  border-color: var(--black);
+  color: var(--white);
+}
+
+/* When you hover the dark button it turns gold */
+.btn-dark:hover,
+.btn-dark:focus {
+  background-color: var(--gold);
+  border-color: var(--gold);
+  color: var(--black);
+  outline: 3px solid var(--gold-dark);
+  outline-offset: 2px;
+}
+
+
+/* ---- HERO ANIMATION ---- */
+
+/* I made this animation so elements slide up and fade in
+   when the page loads. It makes the hero section feel
+   more alive instead of everything just appearing at once */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.9s ease both;
+}
+
+/* Each item has a slightly longer delay than the one before it
+   so the heading shows up first, then the text, then the button */
+.animate-delay-1 { animation-delay: 0.2s; }
+.animate-delay-2 { animation-delay: 0.45s; }
+.animate-delay-3 { animation-delay: 0.7s; }
+
+
+/* ---- HEADER AND NAV ---- */
+
+/* I made the header sticky so it stays at the top of the screen
+   while you scroll. This way you can always click the nav links */
+header {
+  background-color: var(--black);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* On mobile the logo sits above the nav links */
+.nav-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0;
+  gap: 0.75rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: var(--white);
+  font-family: 'Lato', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+/* The logo image is an SVG that is originally dark colored.
+   brightness(0) makes it fully black and invert(1) flips it to white
+   so it shows up properly on the black header */
+.logo img {
+  filter: brightness(0) invert(1);
+  width: 42px;
+  height: 42px;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-list a {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--white);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+/* The link turns gold when hovered and gets an outline when focused
+   so keyboard users can see where they are */
+.nav-list a:hover,
+.nav-list a:focus {
+  color: var(--gold);
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+}
+
+
+/* ---- HERO SECTION ---- */
+
+/* I put the background image in CSS instead of using an img tag.
+   This is because I need to add a dark layer on top of it using
+   a pseudo element, and that only works when the image is in CSS */
+.hero {
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  background-image: url('../images/hero-background.jpg');
+  background-size: cover;
+  background-position: center center;
+  color: var(--white);
+  text-align: center;
+}
+
+/* This dark layer goes on top of the photo so the white text
+   is easy to read no matter how bright the photo is */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+/* I gave this a z-index of 1 so the text shows on top of the dark layer */
+.hero-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 4rem 1rem;
+}
+
+.hero h1 {
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  max-width: 480px;
+  margin: 0 auto 2rem;
+  opacity: 0.9;
+}
+
+
+/* ---- GALLERY SECTION ---- */
+
+/* On mobile the big latte photo is on top and the four
+   smaller photos are in a 2 column grid below it */
+.about-section {
+  padding: 4rem 0;
+  background-color: var(--bg);
+}
+
+.about-text {
+  margin-bottom: 2rem;
+}
+
+/* flex column means everything stacks on top of each other on mobile */
+.gallery-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.gallery-large {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  display: block;
+}
+
+/* The four small images sit in 2 columns */
+.gallery-small-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.gallery-small-row img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+
+/* ---- WHY VISIT US SECTION ---- */
+
+/* On mobile each feature shows one per row so nothing looks cramped */
+.features-section {
+  background-color: var(--bg);
+  padding: 4rem 0;
+  text-align: center;
+}
+
+.features-header {
+  margin-bottom: 3rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+
+.feature-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.feature-icon {
+  width: 120px;
+  height: 120px;
+}
+
+.feature-item h3 {
+  margin-top: 0.5rem;
+}
+
+.feature-item p {
+  max-width: 340px;
+}
+
+
+/* ---- CTA BANNERS ---- */
+
+/* Same as the hero, the background image is in CSS so I can
+   put a dark layer on top of it using ::before */
+.cta-section {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.cta-panel {
+  position: relative;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--white);
+  background-size: cover;
+  background-position: center;
+  padding: 3rem 1rem;
+}
+
+.cta-menu {
+  background-image: url('../images/coffee-shop.jpeg');
+  background-position: center top;
+}
+
+/* Both panels use the same photo but I changed the background-position
+   so each one shows a different part of the image and they look different */
+.cta-locations {
+  background-image: url('../images/coffee-shop.jpeg');
+  background-position: center bottom;
+}
+
+.cta-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.62);
+}
+
+/* z-index: 1 makes sure the text shows above the dark layer */
+.cta-content {
+  position: relative;
+  z-index: 1;
+}
+
+.cta-content h2 {
+  color: var(--white);
+  margin-bottom: 1.5rem;
+}
+
+
+/*  OUR STORY SECTION  */
+
+/* On mobile the photo goes on top and the text sits below it */
+.story-section {
+  background-color: var(--bg);
+  padding: 4rem 0;
+}
+
+.story-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.story-image {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+
+.story-text h2 {
+  margin-bottom: 1rem;
+}
+
+.story-text p {
+  margin-bottom: 1rem;
+}
+
+.story-text .btn {
+  margin-top: 0.5rem;
+}
+
+
+/* TESTIMONIALS  */
+
+.testimonials-section {
+  background-color: var(--black);
+  color: var(--white);
+  padding: 4rem 0;
+}
+
+.testimonials-header {
+  margin-bottom: 2.5rem;
+}
+
+.testimonials-header h2 {
+  color: var(--white);
+}
+
+/* One card per row on mobile */
+.testimonial-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+/* I set the card to position relative so the overlay inside it
+   knows to position itself relative to the card and not the whole page */
+.testimonial-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonial-card img {
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+
+/* The overlay covers the whole photo but the gradient only makes
+   the bottom part dark. This way the person's face at the top
+   is still visible but the quote text at the bottom is easy to read.
+   I used flex with justify-content flex-end to push the text to the bottom */
+.testimonial-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.82) 0%,
+    rgba(0, 0, 0, 0.5)  35%,
+    rgba(0, 0, 0, 0.0)  60%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.25rem;
+}
+
+.testimonial-overlay blockquote {
+  padding: 0;
+}
+
+.testimonial-overlay p {
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+/* The person's name shows in gold right below the quote */
+.testimonial-name {
+  display: block;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: none;
+  padding: 0;
+  text-align: left;
+}
+
+
+/* ---- FOOTER ---- */
+
+footer {
+  background-color: var(--black);
+  color: var(--white);
+  text-align: center;
+  padding: 1.5rem 1rem;
+  font-size: 0.9rem;
+}
+
+
+/*
+   TABLET - screens 768px and wider
+
+   I start changing layouts here to take advantage
+   of the extra screen space. Most sections go from
+   one column to multiple columns at this size. */
+@media (min-width: 768px) {
+
+  /* Bigger font sizes now that there is more room */
+  h1 { font-size: 2.986rem; }
+  h2 { font-size: 2.488rem; }
+  h3 { font-size: 1.728rem; }
+
+  /* The logo and nav links go side by side on tablet */
+  .nav-inner {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1rem 5%;
+  }
+
+  .hero {
+    min-height: 80vh;
+  }
+
+  /* The gallery switches to a two column layout here.
+     The big photo takes up the whole left column across both rows.
+     The four small photos fill a 2x2 grid on the right side.
+     I set fixed row heights so both columns are the exact same height */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 190px 190px;
+    gap: 0.5rem;
+  }
+
+  /* span 2 makes this image stretch tall enough to fill both rows */
+  .gallery-large {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+    display: block;
+  }
+
+  .gallery-small-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  .gallery-small-row img {
+    height: 190px;
+    width: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Two feature cards side by side on tablet.
+     The third one goes on the next row and I center it */
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  /* 1 / -1 makes the card stretch across both columns
+     then max-width and auto margins center it */
+  .feature-item:last-child {
+    grid-column: 1 / -1;
+    max-width: 340px;
+    margin: 0 auto;
+  }
+
+  /* The two CTA banners go side by side */
+  .cta-section {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Story section photo goes on the left, text on the right */
+  .story-inner {
+    flex-direction: row;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  /* flex-shrink: 0 stops the image from getting squeezed
+     when the text next to it takes up more space */
+  .story-image {
+    width: 45%;
+    height: 420px;
+    flex-shrink: 0;
+  }
+
+  /* All three testimonial cards go in one row */
+  .testimonial-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+
+/*DESKTOP - screens 1100px and wider
+
+   Font sizes go up to their largest values and some
+   sections get taller to fill the bigger screen.*/
+@media (min-width: 1100px) {
+
+  h1 { font-size: 3.815rem; }
+  h2 { font-size: 3.052rem; }
+  h3 { font-size: 1.953rem; }
+
+  .hero {
+    min-height: 90vh;
+  }
+
+  /* Same gallery layout as tablet but the images are taller.
+     Each small image is 258px so the big image on the left
+     ends up being about 524px tall which fills the space nicely */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 258px 258px;
+    gap: 0.5rem;
+  }
+
+  .gallery-large {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+    display: block;
+  }
+
+  .gallery-small-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  .gallery-small-row img {
+    height: 258px;
+    object-fit: cover;
+    width: 100%;
+    display: block;
+  }
+
+  /* On desktop there is enough room for all three feature
+     cards in one row. I reset the centering I did on tablet */
+  .features-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .feature-item:last-child {
+    grid-column: auto;
+    max-width: none;
+    margin: 0;
+  }
+
+  /* Taller story image on desktop to fill the extra height */
+  .story-image {
+    width: 48%;
+    height: 520px;
+  }
+
+  .cta-panel {
+    min-height: 380px;
+  }
+}
